@@ -56,6 +56,13 @@ namespace CrudProject.Controllers
         {
             if (ModelState.IsValid)
             {
+                var existingCrudItem = await _context.CrudItems
+                        .FirstOrDefaultAsync(i => i.Name == crudItem.Name);
+                if (existingCrudItem != null)
+                {
+                    ModelState.AddModelError("Name", "The Name must be unique.");
+                    return View(crudItem);
+                }
                 crudItem.LastEdit = DateTime.Now;
                 _context.Add(crudItem);
                 await _context.SaveChangesAsync();
