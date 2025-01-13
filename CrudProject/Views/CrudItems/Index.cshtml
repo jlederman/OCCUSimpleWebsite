@@ -6,6 +6,15 @@
 
 <h1>Index</h1>
 
+@using (Html.BeginForm("Index", "CrudItems", FormMethod.Get))
+{
+    <p>
+        Search by name or description:
+        <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" />
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </p>
+}
+
 <p>
     <a asp-action="Create">Create New</a>
 </p>

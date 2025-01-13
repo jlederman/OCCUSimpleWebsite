@@ -18,9 +18,15 @@ namespace CrudProject.Controllers
         }
 
         // GET: CrudItems
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.CrudItems.ToListAsync());
+            var crudItems = from c in _context.CrudItems select c;
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                crudItems = crudItems.Where(c => c.Name.Contains(searchString) || c.Description.Contains(searchString));
+            }
+            var crudItemsList = await crudItems.ToListAsync();
+            return View(crudItemsList);
         }
 
         // GET: CrudItems/Details/5
