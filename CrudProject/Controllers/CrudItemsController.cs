@@ -201,5 +201,48 @@ namespace CrudProject.Controllers
         {
             return _context.CrudItems.Any(e => e.Id == id);
         }
+
+        public IActionResult Compare()
+        {
+            var crudItems = _context.CrudItems
+                .Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Name
+                })
+                .ToList();
+
+            var viewModel = new CrudItemComparisonViewModel
+            {
+                CrudItemOptions = crudItems
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Compare(CrudItemComparisonViewModel viewModel)
+        {
+            if (viewModel.CrudItemId1.HasValue)
+            {
+                viewModel.CrudItem1 = _context.CrudItems.Find(viewModel.CrudItemId1.Value);
+            }
+
+            if (viewModel.CrudItemId2.HasValue)
+            {
+                viewModel.CrudItem2 = _context.CrudItems.Find(viewModel.CrudItemId2.Value);
+            }
+
+            viewModel.CrudItemOptions = _context.CrudItems
+                .Select(p => new SelectListItem
+                {
+                    Value = p.Id.ToString(),
+                    Text = p.Name
+                })
+                .ToList();
+
+            return View(viewModel);
+        }
     }
 }
