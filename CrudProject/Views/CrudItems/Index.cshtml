@@ -11,13 +11,11 @@
     <p>
         Search by name or description:
         <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" />
-        <input type="submit" value="Search" class="btn btn-primary" />
+        <input type="submit" value="Search" class="btn btn-primary p-1" />
     </p>
 }
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<a asp-action="Create" class="btn btn-primary p-1">Create New</a>
 <table class="table">
     <thead>
         <tr>
@@ -61,3 +59,4 @@
 }
     </tbody>
 </table>
+<a asp-action="Compare" class="btn btn-primary p-1">Compare Items</a>
