@@ -52,10 +52,11 @@ namespace CrudProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Status")] CrudItem crudItem)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Status,LastEdit")] CrudItem crudItem)
         {
             if (ModelState.IsValid)
             {
+                crudItem.LastEdit = DateTime.Now;
                 _context.Add(crudItem);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
@@ -77,6 +78,32 @@ namespace CrudProject.Controllers
                 return NotFound();
             }
             return View(crudItem);
+        }
+        
+        public async Task<IActionResult> Copy(int? id)
+        {
+            if (id == null || _context.CrudItems == null)
+            {
+                return NotFound();
+            }
+
+            var crudItem = await _context.CrudItems.FindAsync(id);
+            if (crudItem == null || _context.CrudItems == null)
+            {
+                return NotFound();
+            }
+
+            var copiedCrudItem = new CrudItem
+            {
+                Name = crudItem.Name + "(Copy)",
+                Description = crudItem.Description,
+                Status = crudItem.Status,
+                LastEdit = crudItem.LastEdit
+            };
+
+            await _context.SaveChangesAsync();
+
+            return View("Create", copiedCrudItem);
         }
 
         // POST: CrudItems/Edit/5
