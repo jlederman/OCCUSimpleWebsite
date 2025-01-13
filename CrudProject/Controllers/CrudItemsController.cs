@@ -52,7 +52,7 @@ namespace CrudProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Description,Status,LastEdit")] CrudItem crudItem)
+        public async Task<IActionResult> Create([Bind("Id,Name,Description,Status")] CrudItem crudItem)
         {
             if (ModelState.IsValid)
             {
@@ -84,7 +84,7 @@ namespace CrudProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Status,LastEdit")] CrudItem crudItem)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Status")] CrudItem crudItem)
         {
             if (id != crudItem.Id)
             {
@@ -95,7 +95,17 @@ namespace CrudProject.Controllers
             {
                 try
                 {
-                    _context.Update(crudItem);
+                    {
+                        var existingCrudItem = await _context.CrudItems.FindAsync(id);
+                        if (existingCrudItem == null) {
+                            return NotFound();
+                        }
+                        existingCrudItem.Id = crudItem.Id;
+                        existingCrudItem.Name = crudItem.Name;
+                        existingCrudItem.Description = crudItem.Description;
+                        existingCrudItem.Status = crudItem.Status;
+                        existingCrudItem.LastEdit = DateTime.Now;
+                    }
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
