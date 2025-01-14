@@ -10,3 +10,10 @@ public class CrudItem
     public string Status { get; set; }
     public DateTime LastEdit { get; set; }
 }
+
+public enum CrudItemStatus
+{
+    Fail,
+    Warn,
+    Pass
+}
