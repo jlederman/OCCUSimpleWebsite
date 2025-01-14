@@ -1,0 +1,74 @@
+@model IEnumerable<CrudItem>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>CRUD</h1>
+
+@using (Html.BeginForm("Index", "CrudItems", FormMethod.Get))
+{
+    <p>
+        Search by name or description:
+        <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" />
+        <input type="submit" value="Search" class="btn btn-primary p-1" />
+        <a href="@Url.Action("Index", "CrudItems")" class="btn btn-primary mb-0 p-1">Show All</a>
+    </p>
+}
+
+<a asp-action="Create" class="btn btn-primary p-1">Create New Item</a>
+<a asp-action="Compare" class="btn btn-primary p-1">Compare Items</a>
+<div class="table-responsive" , style="max-height: 80vh; overflow-y: auto, border: 1px solid #ddd">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Status)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Notes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.LastEdit)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    <input type="text"
+                           class="form-control notes-input"
+                           data-id="@item.Id"
+                           value="@item.Notes" />
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LastEdit)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Copy" asp-route-id="@item.Id">Copy</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+</div>

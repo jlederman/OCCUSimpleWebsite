@@ -1,0 +1,61 @@
+@model CrudItemComparisonViewModel
+
+<h2>Compare Items</h2>
+
+<form asp-action="Compare" method="post">
+    <div class="form-group">
+        <label for="CrudItemId1">Select First Item</label>
+        <select asp-for="CrudItemId1" class="form-control" asp-items="Model.CrudItemOptions">
+            <option value="">-- Select an Item --</option>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label for="CrudItemId2">Select Second Item</label>
+        <select asp-for="CrudItemId2" class="form-control" asp-items="Model.CrudItemOptions">
+            <option value="">-- Select an Item --</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2 mb-2 p-1">Compare</button>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</form>
+
+<hr />
+
+@if (Model.CrudItem1 != null && Model.CrudItem2 != null)
+{
+    <h3>Comparison</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Property</th>
+                <th>@Model.CrudItem1.Name</th>
+                <th>@Model.CrudItem2.Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Description</td>
+                <td>@Model.CrudItem1.Description</td>
+                <td>@Model.CrudItem2.Description</td>
+            </tr>
+            <tr>
+                <td>Status</td>
+                <td>@Model.CrudItem1.Status</td>
+                <td>@Model.CrudItem2.Status</td>
+            </tr>
+            <tr>
+                <td>Last Edited</td>
+                <td>@Model.CrudItem1.LastEdit</td>
+                <td>@Model.CrudItem2.LastEdit</td>
+            </tr>
+        </tbody>
+    </table>
+}
+else if (Model.CrudItemId1.HasValue || Model.CrudItemId2.HasValue)
+{
+    <p class="text-danger">Please select two items to compare.</p>
+}
