@@ -69,6 +69,8 @@ namespace CrudProject.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Name,Description,Status,LastEdit")] CrudItem crudItem)
         {
+            ViewBag.StatusOptions = GetStatusOptions();
+
             if (ModelState.IsValid)
             {
                 var existingCrudItem = await _context.CrudItems
