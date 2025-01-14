@@ -12,8 +12,11 @@
         Search by name or description:
         <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" />
         <input type="submit" value="Search" class="btn btn-primary p-1" />
+        <a href="@Url.Action("Index", "CrudItems")" class="btn btn-primary mb-0 p-1">Show All</a>
     </p>
 }
+
+
 
 <a asp-action="Create" class="btn btn-primary p-1">Create New</a>
 <table class="table">
