@@ -4,5 +4,53 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+<div>
+    <p>
+        This application is built with .NET 9, EntityFramework Core, and utilizes the Model-View-Controller design pattern.
+    </p>
+
+    <p>Requirements for this project include two main objectives:</p>
+    <ol>
+        <li>
+            A set of 37 status values (fail, warn, pass) to be displayed in a single page along
+            with a distinct id or tag. This webpage is meant to show the status values “at a
+            glance”. The status list page can be viewed <a class="" asp-area="" asp-controller="StatusList" asp-action="Index">here</a>,
+            or by selecting the "Status List" in the navigation bar at the top of the page.
+        </li>
+        <li>
+            A second page, no particular relationship to the first, that allows for search plus
+            CRUD (create, read, update, delete) on a simple data set that has four text input
+            fields and an update timestamp. One of the fields should be a name, which
+            should be kept unique. The CRUD portion of this project is found <a class="" asp-area="" asp-controller="CrudItems" asp-action="Index">here</a>,
+            or by selecting the "CRUD" option in the navigation bar.
+        </li>
+    </ol>
+    <p>This application also meets the following requirements:</p>
+    <ul>
+        <li>
+            Read/index – show entire list before search – or what fits on a page. This should be the default view.
+        </li>
+        <li>
+            Read/search – search on the contents of one of the fields, then show the list of data sets that match.
+        </li>
+        <li>
+            Update/edit – provide a way to select an item for update, then provide a way to edit the fields for that item and save the changes.
+        </li>
+        <li>
+            Delete – provide a way to delete new data set.
+        </li>
+        <li>
+            Copy/edit – provide a way to copy an existing data set and then edit/save the data set.
+        </li>
+        
+        <li>
+            Optional bonus feature: Provide a way to select two items from the list
+        and then compare the field contents with a visual clue when the same
+        items from different sets have different values. Names and timestamps are ignored in this comparison. 
+        </li>
+    </ul>
+    <p>The solution runs on Windows. The GitHub repository for this project is located <a target="_blank" href="https://github.com/jlederman/OCCUSimpleWebsite">here</a>. 
+        The sample data for the database is created the first time the solution is started via the <code>Seed37</code> method in <code>ApplicationDbContext</code> class.
+    </p>
 </div>

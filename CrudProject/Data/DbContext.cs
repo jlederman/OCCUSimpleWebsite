@@ -13,11 +13,11 @@ public class ApplicationDbContext : DbContext
 
         if (!context.CrudItems.Any())
         {
-            var seed37crudItems = new List<CrudItem> { };
+            var seed37CrudItems = new List<CrudItem> { };
             Random random = new Random();
             for (int i = 0; i < 37; i++)
             {
-                seed37crudItems.Add(new CrudItem
+                seed37CrudItems.Add(new CrudItem
                 {
                     Name = $"Name {i}",
                     Description = $"Description {i}",
@@ -26,7 +26,7 @@ public class ApplicationDbContext : DbContext
                 });
             }
 
-            context.CrudItems.AddRange(seed37crudItems);
+            context.CrudItems.AddRange(seed37CrudItems);
             context.SaveChanges();
         }
     }
