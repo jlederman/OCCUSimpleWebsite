@@ -24,4 +24,28 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+
+    const noteInputs = document.querySelectorAll('.notes-input');
+
+    noteInputs.forEach(input => {
+        input.addEventListener('change', function () {
+            const itemId = this.dataset.id;
+            const notes = this.value;
+
+            fetch('/CrudItems/UpdateNotes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                },
+                body: JSON.stringify({ id: itemId, notes: notes })
+            }).then(response => {
+                if (response.ok) {
+                    console.log('Notes updated successfully.');
+                } else {
+                    alert('Error updating notes.');
+                }
+            });
+        });
+    });
 });

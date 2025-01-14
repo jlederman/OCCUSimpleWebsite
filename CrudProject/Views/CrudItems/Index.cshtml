@@ -32,6 +32,9 @@
                     @Html.DisplayNameFor(model => model.Status)
                 </th>
                 <th>
+                    @Html.DisplayNameFor(model => model.Notes)
+                </th>
+                <th>
                     @Html.DisplayNameFor(model => model.LastEdit)
                 </th>
                 <th></th>
@@ -48,6 +51,12 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Status)
+                </td>
+                <td>
+                    <input type="text"
+                           class="form-control notes-input"
+                           data-id="@item.Id"
+                           value="@item.Notes" />
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.LastEdit)

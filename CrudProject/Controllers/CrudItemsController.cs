@@ -128,6 +128,7 @@ namespace CrudProject.Controllers
                 Name = crudItem.Name + "(Copy)",
                 Description = crudItem.Description,
                 Status = crudItem.Status,
+                Notes = crudItem.Notes,
                 LastEdit = crudItem.LastEdit
             };
 
@@ -260,6 +261,27 @@ namespace CrudProject.Controllers
                 .ToList();
 
             return View(viewModel);
+        }
+
+        // POST: CrudItems/UpdateNotes
+        public IActionResult UpdateNotes([FromBody] UpdateNotesModel model)
+        {
+            if (model == null || model.Id <= 0)
+            {
+                return BadRequest("Invalid data.");
+            }
+
+            var item = _context.CrudItems.FirstOrDefault(x => x.Id == model.Id);
+            if (item == null)
+            {
+                return NotFound("Item not found.");
+            }
+
+            item.Notes = model.Notes;
+            item.LastEdit = DateTime.Now;
+            _context.SaveChanges();
+
+            return Ok();
         }
     }
 }
