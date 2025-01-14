@@ -105,7 +105,9 @@ namespace CrudProject.Controllers
             }
             return View(crudItem);
         }
-        
+
+        // GET: CrudItems/Copy/5
+        // Copies a new item via returning Create POST while retaining item properties, and updating the name
         public async Task<IActionResult> Copy(int? id)
         {
             ViewBag.StatusOptions = GetStatusOptions();
@@ -234,6 +236,7 @@ namespace CrudProject.Controllers
             return View(viewModel);
         }
 
+        // POST: CrudItems/Compare
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Compare(CrudItemComparisonViewModel viewModel)
