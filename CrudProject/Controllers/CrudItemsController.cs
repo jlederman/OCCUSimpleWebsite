@@ -139,7 +139,7 @@ namespace CrudProject.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Status")] CrudItem crudItem)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Description,Status, LastEdit")] CrudItem crudItem)
         {
             if (id != crudItem.Id)
             {
@@ -148,24 +148,23 @@ namespace CrudProject.Controllers
 
             if (ModelState.IsValid)
             {
+                var existingProduct = await _context.CrudItems
+                    .FirstOrDefaultAsync(i => i.Name == crudItem.Name && i.Id != id);
+                if (existingProduct != null)
+                {
+                    ModelState.AddModelError("Name", "The item name must be unique.");
+                    return View(crudItem);
+                }
+
                 try
                 {
-                    {
-                        var existingCrudItem = await _context.CrudItems.FindAsync(id);
-                        if (existingCrudItem == null) {
-                            return NotFound();
-                        }
-                        existingCrudItem.Id = crudItem.Id;
-                        existingCrudItem.Name = crudItem.Name;
-                        existingCrudItem.Description = crudItem.Description;
-                        existingCrudItem.Status = crudItem.Status;
-                        existingCrudItem.LastEdit = DateTime.Now;
-                    }
+                    crudItem.LastEdit = DateTime.Now;
+                    _context.Update(crudItem);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!CrudItemExists(crudItem.Id))
+                    if (!_context.CrudItems.Any(i => i.Id == id))
                     {
                         return NotFound();
                     }
