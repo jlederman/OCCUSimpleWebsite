@@ -34,3 +34,16 @@ body {
     /* override bootstrap table cell wild card https://github.com/twbs/bootstrap/issues/38779 */
     --bs-table-bg: #ffcccc;
 }
+
+[data-status="Fail"] {
+    --bs-table-bg: #F04948;
+}
+
+[data-status="Warn"] {
+    --bs-table-bg: #F0EE48;
+}
+
+[data-status="Pass"] {
+    --bs-table-bg: #7fef48;
+}
+
