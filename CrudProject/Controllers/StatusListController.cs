@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CrudProject.Controllers
 {
-    public class StatusGlanceController : Controller
+    public class StatusListController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public StatusGlanceController(ApplicationDbContext context)
+        public StatusListController(ApplicationDbContext context)
         {
             _context = context;
         }

@@ -6,13 +6,13 @@
 
 <h1>Status List</h1>
 
-@using (Html.BeginForm("Index", "StatusGlance", FormMethod.Get))
+@using (Html.BeginForm("Index", "StatusList", FormMethod.Get))
 {
     <p>
         Search by name or description:
         <input type="text" name="searchString" value="@ViewData["CurrentFilter"]" />
         <input type="submit" value="Search" class="btn btn-primary p-1" />
-        <a href="@Url.Action("Index", "StatusGlance")" class="btn btn-primary mb-0 p-1">Show All</a>
+        <a href="@Url.Action("Index", "StatusList")" class="btn btn-primary mb-0 p-1">Show All</a>
     </p>
 }
 <div class="table-responsive", style="max-height: 80vh; overflow-y: auto, border: 1px solid #ddd">
