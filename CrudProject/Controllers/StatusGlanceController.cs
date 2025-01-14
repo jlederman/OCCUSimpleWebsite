@@ -18,7 +18,7 @@ namespace CrudProject.Controllers
             var crudItems = from c in _context.CrudItems select c;
             if (!string.IsNullOrEmpty(searchString))
             {
-                crudItems = crudItems.Where(c => c.Name.Contains(searchString) || c.Description.Contains(searchString));
+                crudItems = crudItems.Where(c => c.Name.Contains(searchString) || c.Description.Contains(searchString) || c.Status.Contains(searchString));
             }
             var crudItemsList = await crudItems.ToListAsync();
             return View(crudItemsList);

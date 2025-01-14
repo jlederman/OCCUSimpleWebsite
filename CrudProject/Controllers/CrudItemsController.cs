@@ -13,13 +13,25 @@ namespace CrudProject.Controllers
             _context = context;
         }
 
+        private List<SelectListItem> GetStatusOptions()
+        {
+            return Enum.GetValues(typeof(CrudItemStatus))
+                .Cast<CrudItemStatus>()
+                .Select(option => new SelectListItem
+                {
+                    Value = option.ToString(),
+                    Text = option.ToString()
+                })
+                .ToList();
+        }
+
         // GET: CrudItems
         public async Task<IActionResult> Index(string searchString)
         {
             var crudItems = from c in _context.CrudItems select c;
             if (!string.IsNullOrEmpty(searchString))
             {
-                crudItems = crudItems.Where(c => c.Name.Contains(searchString) || c.Description.Contains(searchString));
+                crudItems = crudItems.Where(c => c.Name.Contains(searchString) || c.Description.Contains(searchString) || c.Status.Contains(searchString));
             }
             var crudItemsList = await crudItems.ToListAsync();
             return View(crudItemsList);
@@ -46,6 +58,7 @@ namespace CrudProject.Controllers
         // GET: CrudItems/Create
         public IActionResult Create()
         {
+            ViewBag.StatusOptions = GetStatusOptions();
             return View();
         }
 
@@ -76,6 +89,8 @@ namespace CrudProject.Controllers
         // GET: CrudItems/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
+            ViewBag.StatusOptions = GetStatusOptions();
+
             if (id == null)
             {
                 return NotFound();
@@ -91,6 +106,8 @@ namespace CrudProject.Controllers
         
         public async Task<IActionResult> Copy(int? id)
         {
+            ViewBag.StatusOptions = GetStatusOptions();
+
             if (id == null || _context.CrudItems == null)
             {
                 return NotFound();
