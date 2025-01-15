@@ -15,13 +15,13 @@ namespace CrudProject.Controllers
         // GET: Readonly Items List
         public async Task<IActionResult> Index(string searchString)
         {
-            var crudItems = from c in _context.CrudItems select c;
+            var statusListLitems = from c in _context.StatusList select c;
             if (!string.IsNullOrEmpty(searchString))
             {
-                crudItems = crudItems.Where(c => c.Name.Contains(searchString) || c.Description.Contains(searchString) || c.Status.Contains(searchString));
+                statusListLitems = statusListLitems.Where(c => c.Name.Contains(searchString) || c.Status.Contains(searchString));
             }
-            var crudItemsList = await crudItems.ToListAsync();
-            return View(crudItemsList);
+            var statusList = await statusListLitems.ToListAsync();
+            return View(statusList);
         }
     }
 }

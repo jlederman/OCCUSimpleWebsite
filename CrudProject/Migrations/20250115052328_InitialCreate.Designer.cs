@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CrudProject.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250114213105_AddNotesToCrudItems")]
-    partial class AddNotesToCrudItems
+    [Migration("20250115052328_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,6 +54,27 @@ namespace CrudProject.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("CrudItems");
+                });
+
+            modelBuilder.Entity("StatusListModel", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("StatusList");
                 });
 #pragma warning restore 612, 618
         }

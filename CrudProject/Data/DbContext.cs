@@ -4,7 +4,8 @@ public class ApplicationDbContext : DbContext
 {
     public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-    public DbSet<CrudItem> CrudItems { get; set; }
+    public virtual DbSet<CrudItem> CrudItems { get; set; }
+    public virtual DbSet<StatusListModel> StatusList { get; set; }
 
     public static void Seed37(ApplicationDbContext context)
     {
@@ -29,6 +30,30 @@ public class ApplicationDbContext : DbContext
             context.CrudItems.AddRange(seed37CrudItems);
             context.SaveChanges();
         }
+    }
+
+    public static void StatusListSeed(ApplicationDbContext context)
+    {
+        if (context == null)
+            throw new ArgumentNullException("It appears we do not have any context for the database");
+        
+        if (!context.StatusList.Any())
+        {
+            var seed37StatusList = new List<StatusListModel> { };
+            Random random = new Random();
+            for (int i = 0; i < 37; i++)
+            {
+                seed37StatusList.Add(new StatusListModel
+                {
+                    Name = $"Name {i}",
+                    Status = GetRandomEnumValue<Status>(random).ToString(),
+                });
+            }
+
+            context.StatusList.AddRange(seed37StatusList);
+            context.SaveChanges();
+        }
+
     }
 
     // We want to seed 37 rows with randomized status properties 

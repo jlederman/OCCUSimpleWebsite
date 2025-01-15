@@ -18,6 +18,7 @@ using (var scope = app.Services.CreateScope())
 
     context.Database.Migrate();
     ApplicationDbContext.Seed37(context);
+    ApplicationDbContext.StatusListSeed(context);
 }
 
 // Configure the HTTP request pipeline.
